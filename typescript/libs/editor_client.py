@@ -85,13 +85,14 @@ class EditorClient:
         self.initialized = True
 
     def load_language_service_setting_for_js(self):
-        settings = sublime.load_settings('Preferences.sublime-settings')
+        settings = sublime.load_settings('Typescript.sublime-settings')
         self.enable_language_service_for_js = settings.get("enable_language_service_for_javascript", True)
 
     def load_format_settings(self):
-        settings = sublime.load_settings('Preferences.sublime-settings')
+        settings = sublime.load_settings('Typescript.sublime-settings')
         self.tab_size = settings.get('tab_size', 4)
         self.indent_size = settings.get('indent_size', self.tab_size)
+
         self.translate_tab_to_spaces = settings.get('translate_tabs_to_spaces', False)
         self.ts_auto_format_enabled = settings.get("typescript_auto_format")
         self.ts_auto_indent_enabled = settings.get("typescript_auto_indent")
@@ -138,6 +139,7 @@ class EditorClient:
     def has_errors(self, filename):
         client_info = self.get_or_add_file(filename)
         return len(client_info.errors['syntacticDiag']) > 0 or len(client_info.errors['semanticDiag']) > 0
+
 
 # The globally accessible instance
 cli = EditorClient()

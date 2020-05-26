@@ -4,6 +4,9 @@ from ..libs.view_helpers import *
 from ..libs import *
 from .event_hub import EventHub
 
+settings = sublime.load_settings("TypeScript.sublime-settings")
+
+
 class TypeScriptEventListener(sublime_plugin.EventListener):
     """To avoid duplicated behavior among event listeners"""
 
@@ -265,6 +268,10 @@ class TypeScriptEventListener(sublime_plugin.EventListener):
 
     def on_pre_save(self, view):
         log.debug("on_pre_save")
+
+        if is_typescript(view) and settings.get('auto_format_on_save', False):
+            view.run_command('typescript_format_document')
+
         check_update_view(view)
 
     def on_hover(self, view, point, hover_zone):
